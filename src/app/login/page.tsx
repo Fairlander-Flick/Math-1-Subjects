@@ -51,17 +51,17 @@ export default function Login() {
   return (
     <div className="w-full max-w-md mx-auto mt-20">
       <div className="glass-container">
-        <h1 className="text-3xl font-bold mb-6 text-center text-white">Math 1 Login</h1>
+        <h1 className="text-[1.5rem] font-semibold mb-6 text-center text-[#ededed] tracking-tight">Math 1 Login</h1>
         
         {error && (
-          <div className="bg-red-500/20 border border-red-500/50 text-white p-3 rounded-lg mb-4 text-sm text-center">
+          <div className="bg-[#110505] border border-[#ff3333] text-[#ff3333] p-3 rounded-lg mb-6 text-sm text-center">
             {error}
           </div>
         )}
 
-        <form className="space-y-4" onSubmit={handleLogin}>
+        <form className="space-y-5" onSubmit={handleLogin}>
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">Email</label>
+            <label className="block text-sm font-medium text-[#888] mb-2">Email</label>
             <input 
               type="email" 
               className="glass-input" 
@@ -72,7 +72,7 @@ export default function Login() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">Password</label>
+            <label className="block text-sm font-medium text-[#888] mb-2">Password</label>
             <input 
               type="password" 
               className="glass-input"
@@ -83,7 +83,7 @@ export default function Login() {
             />
           </div>
           
-          <div className="pt-2 flex flex-col gap-3">
+          <div className="pt-4 flex flex-col gap-3">
             <button 
               type="submit" 
               className="glass-button"

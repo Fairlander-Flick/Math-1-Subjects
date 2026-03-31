@@ -182,46 +182,42 @@ export default function Home() {
         </div>
 
         <div className="mb-8">
-          <div className="flex justify-between text-sm text-gray-300 mb-2">
+          <div className="flex justify-between text-sm text-[#888] mb-2 font-medium">
             <span>Overall Progress</span>
             <span>{progressPercent}%</span>
           </div>
-          <div className="w-full h-3 bg-black/30 rounded-full overflow-hidden border border-white/10">
+          <div className="w-full h-[6px] bg-[#222] rounded-full overflow-hidden">
             <div 
-              className="h-full bg-[var(--accent-color)] transition-all duration-500 ease-out"
+              className="h-full bg-white transition-all duration-700 ease-in-out"
               style={{ width: `${progressPercent}%` }}
             />
           </div>
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-4">
           {topics.map((topic) => (
             <label 
               key={topic.id}
-              className={`flex items-start gap-4 p-5 rounded-xl border transition-all cursor-pointer ${
-                topic.completed 
-                  ? 'bg-white/5 border-[var(--success-color)] shadow-[0_0_15px_rgba(16,185,129,0.15)]' 
-                  : 'bg-black/20 border-[var(--glass-border)] hover:bg-white/10'
-              }`}
+              className={`topic-card ${topic.completed ? 'completed' : ''}`}
             >
               <div className="pt-1">
                 <input 
                   type="checkbox" 
                   checked={topic.completed}
                   onChange={() => toggleTopic(topic.id)}
-                  className="w-6 h-6 rounded border-gray-400 text-[var(--accent-color)] shadow-sm focus:border-[var(--accent-color)] focus:ring focus:ring-[var(--accent-color)] focus:ring-opacity-50 cursor-pointer"
+                  className="custom-checkbox"
                 />
               </div>
               <div className="flex-1">
-                <h3 className={`text-xl font-bold mb-3 transition-colors ${topic.completed ? 'text-[var(--success-color)]' : 'text-white'}`}>
+                <h3 className={`text-[1.1rem] font-semibold mb-3 tracking-tight transition-colors ${topic.completed ? 'text-[#888]' : 'text-[#ededed]'}`}>
                   {topic.title}
                 </h3>
                 <ul className="space-y-2">
                   {topic.subtopics.map((sub, idx) => (
-                    <li key={idx} className="text-sm text-gray-300 flex items-start gap-2">
-                      <svg className="w-4 h-4 mt-0.5 text-[var(--accent-color)] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                      {sub.includes('Mock Alert') ? (
-                        <span className="text-yellow-400 font-medium">{sub}</span>
+                    <li key={idx} className="text-[0.9rem] text-[#888] flex items-start gap-2 leading-relaxed">
+                      <svg className="w-[14px] h-[14px] mt-1 text-[#444] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                      {sub.includes('Mock Alert:') ? (
+                        <span className="text-[#ceb366] font-medium">{sub}</span>
                       ) : (
                         <span>{sub}</span>
                       )}
