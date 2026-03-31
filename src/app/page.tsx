@@ -14,95 +14,99 @@ type Topic = {
 const initialTopics: Topic[] = [
   {
     id: '1',
-    title: '1. Logic & Set Theory (Lectures 1-3)',
+    title: '1. Logic & Set Theory',
     completed: false,
     subtopics: [
-      'Truth Tables & Logical Equivalences (De Morgan’s) - Sheet 1',
-      'Quantifiers & English Translation - Sheet 1, 3',
-      'Set Theory Operations (Power Sets, Union, Intersection) - Sheet 1, 2',
-      'Function Mapping (Domain/Range) - Sheet 2',
-      'Function Classifications (Injective, Surjective, Invertibility)'
+      'Truth Tables & Logical Equivalences (De Morgan’s)',
+      'Quantifiers & English Translation',
+      'Set Theory Operations',
+      'Function Mapping (Domain/Range)',
+      'Function Classifications (Injective, Surjective)'
     ]
   },
   {
     id: '2',
-    title: '2. Inequalities & Complex Numbers (Lectures 4-8)',
+    title: '2. Inequalities & Complex Numbers',
     completed: false,
     subtopics: [
-      'Absolute Value & Inequalities - Sheet 3',
-      'Complex Form Conversions (Cartesian, Trig, Exp) - Sheet 4. Mock Alert: Div & Exp',
-      'Complex Equations & Roots (Regular Polygons) - Sheet 4'
+      'Absolute Value & Inequalities',
+      'Complex Form Conversions',
+      'Complex Equations & Roots',
+      'Mock Alert: Div & Exp'
     ]
   },
   {
     id: '3',
-    title: '3. Induction & Polynomials (Lectures 9-10)',
+    title: '3. Induction & Polynomials',
     completed: false,
     subtopics: [
-      'Mathematical Induction Proofs - Sheet 5. Mock Alert: Imaginary unit i',
-      'Horner’s Scheme & Polynomial Factorization - Sheet 5',
-      'Multiplicity (Double Roots). Mock Alert: Proving double roots'
+      'Mathematical Induction Proofs',
+      'Horner’s Scheme & Polynomial Factorization',
+      'Multiplicity (Double Roots)',
+      'Mock Alert: Proving double roots & Imaginary i'
     ]
   },
   {
     id: '4',
-    title: '4. Vector Spaces & Linear Maps (Lectures 11-15)',
+    title: '4. Vector Spaces & Linear Maps',
     completed: false,
     subtopics: [
-      'Subspace Testing (Closure) - Sheet 6',
-      'Linear Independence, Span & Basis - Sheet 6',
-      'Basis Completion - Sheet 7',
-      'Matrix Representation of Linear Functions - Sheet 7 (High Priority)',
-      'Fundamental Dimensions (Rank, Kernel, Range, Nullity) - Sheet 8'
+      'Subspace Testing',
+      'Linear Independence, Span & Basis',
+      'Basis Completion',
+      'Matrix Representation of Linear Functions',
+      'Rank, Kernel, Range, Nullity'
     ]
   },
   {
     id: '5',
-    title: '5. Linear Systems & Gaussian Elimination (Lectures 16-18)',
+    title: '5. Linear Systems & Gaussian Elimination',
     completed: false,
     subtopics: [
-      'Parametric Systems & Invertibility - Sheet 8, 9',
-      'Solution Count Prediction (0, 1, or ∞) - Sheet 8',
-      'Full Gaussian Elimination (RREF, Ker A, Rank) - Sheet 9'
+      'Parametric Systems & Invertibility',
+      'Solution Count Prediction (0, 1, ∞)',
+      'Full Gaussian Elimination (RREF, Ker A)'
     ]
   },
   {
     id: '6',
-    title: '6. Affine Geometry & Subspaces (Lectures 19-20)',
+    title: '6. Affine Geometry',
     completed: false,
     subtopics: [
-      'Lines & Planes (Parametric, Intersections) - Sheet 10',
-      'Direct Sums & Dimension calculations - Sheet 10'
+      'Lines & Planes (Parametric)',
+      'Direct Sums & Dimension calculations'
     ]
   },
   {
     id: '7',
-    title: '7. Norms, Inner Products & Gram-Schmidt (Lectures 21-23)',
+    title: '7. Norms, Inner Products & Gram-Schmidt',
     completed: false,
     subtopics: [
-      'p-Norms & Convexity Proofs (Triangle Inequality) - Sheet 11',
-      'Inner Product & Orthogonality - Sheet 12',
-      'Gram-Schmidt & Projections (ONB) - Sheet 12'
+      'p-Norms & Convexity Proofs',
+      'Inner Product & Orthogonality',
+      'Gram-Schmidt & Projections'
     ]
   },
   {
     id: '8',
-    title: '8. Determinants & Least Squares (Lectures 24-25)',
+    title: '8. Determinants & Least Squares',
     completed: false,
     subtopics: [
-      'Vector Cross Product. Mock Alert: Cross product with λ',
-      'Determinants & Invertibility (Laplace Expansion) - Sheet 13',
-      'Least Squares Optimization (Normal Equations) - Sheet 13. Mock Alert: Q3a & 3b'
+      'Vector Cross Product',
+      'Determinants & Invertibility (Laplace)',
+      'Least Squares (Normal Equations)',
+      'Mock Alert: Cross product with λ / Q3a & 3b'
     ]
   },
   {
     id: '9',
-    title: '9. Eigenvalues & Matrix Theory (Lectures 26-28)',
+    title: '9. Eigenvalues & Matrix Theory',
     completed: false,
     subtopics: [
-      'Characteristic Polynomials & Multiplicities - Sheet 14. Mock Alert: Q1d',
-      'Theoretical Eigen-Properties - Sheet 14',
-      'Positive Definiteness (PD) & Unified Theory. Mock Alert: Q4'
+      'Characteristic Polynomials',
+      'Theoretical Eigen-Properties',
+      'Positive Definiteness (PD)',
+      'Mock Alert: Q1d & Q4'
     ]
   }
 ];
@@ -117,7 +121,6 @@ export default function Home() {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session)
       setLoading(false)
-      // Database load logic would go here
     })
 
     const {
@@ -133,7 +136,6 @@ export default function Home() {
     setTopics(topics.map(t => 
       t.id === id ? { ...t, completed: !t.completed } : t
     ))
-    // Database save logic would go here
   }
 
   const handleLogout = async () => {
@@ -142,22 +144,20 @@ export default function Home() {
   }
 
   if (loading) {
-    return <div className="text-white mt-20 text-xl font-bold">Loading...</div>
+    return <div className="text-[#888] mt-20 text-sm font-medium text-center">Loading workspace...</div>
   }
 
   if (!session) {
     return (
-      <div className="w-full max-w-3xl mx-auto mt-10">
-        <div className="glass-container text-center space-y-6">
-          <h1 className="text-4xl font-extrabold text-white mb-2">Math 1 Exam Checklist</h1>
-          <p className="text-gray-300 mb-8">You need to log in to track your detailed study progress!</p>
-          <button 
-            onClick={() => router.push('/login')}
-            className="glass-button w-auto px-8 py-3"
-          >
-            Go to Login
-          </button>
-        </div>
+      <div className="w-full max-w-lg mx-auto mt-20 text-center">
+        <h1 className="text-2xl font-bold text-[#ededed] mb-2">Math 1 Workspace</h1>
+        <p className="text-[#888] text-sm mb-6">Authentication required to view this project roadmap.</p>
+        <button 
+          onClick={() => router.push('/login')}
+          className="bg-[#ededed] text-[#000] px-5 py-2 rounded-md text-sm font-semibold hover:bg-white transition-colors"
+        >
+          Sign in
+        </button>
       </div>
     )
   }
@@ -166,69 +166,93 @@ export default function Home() {
   const progressPercent = Math.round((completedCount / topics.length) * 100);
 
   return (
-    <div className="w-full max-w-4xl mx-auto mt-10">
-      <div className="glass-container">
-        <div className="flex justify-between items-center mb-8 border-b border-[var(--glass-border)] pb-4">
-          <div>
-            <h1 className="text-3xl font-bold text-[#ededed]">Math 1 Final Prep</h1>
-            <p className="text-[#888] text-sm mt-1">Logged in as <span className="text-[#ededed] font-medium">{session.user?.email?.split('@')[0]}</span></p>
-          </div>
+    <div className="w-full max-w-6xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+      
+      {/* SaaS Header */}
+      <header className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 mb-8 border-b border-[#222]">
+        <div>
+          <h1 className="text-2xl font-bold text-[#ededed] tracking-tight">Math 1 Syllabus</h1>
+          <p className="text-[#888] text-sm mt-1">Track your relationship with limits and calculus</p>
+        </div>
+        <div className="mt-4 sm:mt-0 flex items-center gap-4">
+          <span className="text-xs text-[#888] py-1.5 px-3 bg-[#0a0a0a] border border-[#222] rounded-full flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#10b981]"></span>
+            {session.user?.email?.split('@')[0]}
+          </span>
           <button 
             onClick={handleLogout}
-            className="glass-button secondary !w-auto !px-4 !py-2 text-sm"
+            className="text-sm font-medium text-[#888] hover:text-[#ededed] transition-colors"
           >
-            Logout
+            Sign out
           </button>
         </div>
+      </header>
 
-        <div className="mb-8">
-          <div className="flex justify-between text-sm text-[#888] mb-2 font-medium">
-            <span>Overall Progress</span>
-            <span>{progressPercent}%</span>
-          </div>
-          <div className="w-full h-[6px] bg-[#222] rounded-full overflow-hidden">
-            <div 
-              className="h-full bg-white transition-all duration-700 ease-in-out"
-              style={{ width: `${progressPercent}%` }}
-            />
+      {/* Main SaaS Table/List View */}
+      <div className="bg-[#050505] border border-[#222] rounded-xl overflow-hidden shadow-2xl">
+        
+        {/* Table Header / Progress Bar */}
+        <div className="px-6 py-4 border-b border-[#222] flex flex-col sm:flex-row sm:items-center justify-between bg-[#0a0a0a]">
+          <span className="text-xs font-semibold text-[#888] uppercase tracking-wider mb-2 sm:mb-0">
+            Roadmap Progress ({completedCount}/{topics.length})
+          </span>
+          <div className="flex items-center gap-3 w-full sm:w-64">
+            <div className="w-full h-1.5 bg-[#222] rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-[#ededed] transition-all duration-700 ease-in-out"
+                style={{ width: `${progressPercent}%` }}
+              />
+            </div>
+            <span className="text-xs font-mono text-[#888]">{progressPercent}%</span>
           </div>
         </div>
 
-        <div className="space-y-4">
+        {/* Requirements List */}
+        <div className="divide-y divide-[#1a1a1a]">
           {topics.map((topic) => (
-            <label 
+            <div 
               key={topic.id}
-              className={`topic-card ${topic.completed ? 'completed' : ''}`}
+              className={`group flex flex-col lg:flex-row items-start lg:items-center p-4 sm:p-5 hover:bg-[#0a0a0a] transition-colors ${topic.completed ? 'opacity-50 grayscale' : ''}`}
             >
-              <div className="pt-1">
+              
+              <div className="flex items-center gap-4 w-full lg:w-[35%] mb-3 lg:mb-0">
                 <input 
                   type="checkbox" 
                   checked={topic.completed}
                   onChange={() => toggleTopic(topic.id)}
-                  className="custom-checkbox"
+                  className="appearance-none w-5 h-5 border border-[#444] rounded bg-black cursor-pointer checked:bg-[#ededed] checked:border-[#ededed] transition-colors relative flex-shrink-0
+                  before:content-[''] before:absolute before:inset-0 before:m-auto before:w-1.5 before:h-2.5 before:border-r-2 before:border-b-2 before:border-black before:rotate-45 before:opacity-0 checked:before:opacity-100"
                 />
-              </div>
-              <div className="flex-1">
-                <h3 className={`text-[1.1rem] font-semibold mb-3 tracking-tight transition-colors ${topic.completed ? 'text-[#888]' : 'text-[#ededed]'}`}>
+                <h3 className={`text-sm font-medium tracking-tight ${topic.completed ? 'text-[#888] line-through' : 'text-[#ededed]'}`}>
                   {topic.title}
                 </h3>
-                <ul className="space-y-2">
-                  {topic.subtopics.map((sub, idx) => (
-                    <li key={idx} className="text-[0.9rem] text-[#888] flex items-start gap-2 leading-relaxed">
-                      <svg className="w-[14px] h-[14px] mt-1 text-[#444] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                      {sub.includes('Mock Alert:') ? (
-                        <span className="text-[#ceb366] font-medium">{sub}</span>
-                      ) : (
-                        <span>{sub}</span>
-                      )}
-                    </li>
-                  ))}
-                </ul>
               </div>
-            </label>
+              
+              <div className="w-full lg:w-[65%] pl-9 lg:pl-0">
+                <div className="flex flex-wrap gap-2">
+                  {topic.subtopics.map((sub, idx) => {
+                    const isMock = sub.includes('Mock');
+                    return (
+                      <span 
+                        key={idx} 
+                        className={`text-[11px] px-2.5 py-1 rounded-md border ${
+                          isMock 
+                            ? 'border-[#332b14] bg-[#1a1608] text-[#ceb366]' 
+                            : 'border-[#222] bg-[#000] text-[#888]'
+                        }`}
+                      >
+                        {sub}
+                      </span>
+                    )
+                  })}
+                </div>
+              </div>
+
+            </div>
           ))}
         </div>
       </div>
+
     </div>
   )
 }
