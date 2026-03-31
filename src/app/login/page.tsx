@@ -5,25 +5,27 @@ import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 
 export default function Login() {
-  const [email, setEmail] = useState('')
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const router = useRouter()
+
+  // Supabase requires an email, so we format the username silently
+  const formatEmail = (user: string) => `${user.toLowerCase().replace(/\s+/g, '')}@mathapp.local`
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError(null)
     
-    // Attempt Supabase login
     const { error } = await supabase.auth.signInWithPassword({
-      email,
+      email: formatEmail(username),
       password,
     })
 
     if (error) {
-      setError(error.message + ' (Did you add your Supabase credentials?)')
+      setError(error.message)
     } else {
       router.push('/')
     }
@@ -35,15 +37,54 @@ export default function Login() {
     setLoading(true)
     setError(null)
     
+    // We register the formatted email
     const { error } = await supabase.auth.signUp({
-      email,
+      email: formatEmail(username),
       password,
     })
 
     if (error) {
-      setError(error.message + ' (Did you add your Supabase credentials?)')
+      setError(error.message)
     } else {
-      alert('Check your email for the confirmation link!')
+      // Auto-login after sign up since we aren't confirming real emails
+      await supabase.auth.signInWithPassword({
+        email: formatEmail(username),
+        password,
+      })
+      router.push('/')
+    }
+    setLoading(false)
+  }
+
+  const handleDemoLogin = async () => {
+    setLoading(true)
+    setError(null)
+    const demoUser = 'demouser'
+    const demoPass = 'DemoMath123!'
+    
+    // Attempt sign in first
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email: formatEmail(demoUser),
+      password: demoPass,
+    })
+
+    if (signInError) {
+      // If it fails, sign up the demo user
+      const { error: signUpError } = await supabase.auth.signUp({
+        email: formatEmail(demoUser),
+        password: demoPass,
+      })
+      if (!signUpError) {
+        await supabase.auth.signInWithPassword({
+          email: formatEmail(demoUser),
+          password: demoPass,
+        })
+        router.push('/')
+      } else {
+        setError(signUpError.message)
+      }
+    } else {
+      router.push('/')
     }
     setLoading(false)
   }
@@ -61,14 +102,14 @@ export default function Login() {
 
         <form className="space-y-5" onSubmit={handleLogin}>
           <div>
-            <label className="block text-sm font-medium text-[#888] mb-2">Email</label>
+            <label className="block text-sm font-medium text-[#888] mb-2">Username</label>
             <input 
-              type="email" 
+              type="text" 
               className="glass-input" 
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               required
-              placeholder="student@university.edu"
+              placeholder="e.g. mathstudent"
             />
           </div>
           <div>
@@ -80,6 +121,7 @@ export default function Login() {
               onChange={(e) => setPassword(e.target.value)}
               required
               placeholder="••••••••"
+              minLength={6}
             />
           </div>
           
@@ -89,7 +131,7 @@ export default function Login() {
               className="glass-button"
               disabled={loading}
             >
-              {loading ? 'Processing...' : 'Login to Continue'}
+              {loading ? 'Processing...' : 'Login'}
             </button>
             <button 
               type="button" 
@@ -97,7 +139,23 @@ export default function Login() {
               onClick={handleSignUp}
               disabled={loading}
             >
-              Register New Account
+              Sign Up via Username
+            </button>
+
+            <div className="flex items-center gap-4 my-2">
+              <div className="h-[1px] bg-[#222] flex-1"></div>
+              <span className="text-xs text-[#666] uppercase tracking-widest">or</span>
+              <div className="h-[1px] bg-[#222] flex-1"></div>
+            </div>
+
+            <button 
+              type="button" 
+              className="glass-button"
+              style={{ background: '#0a0a0a', borderColor: '#333' }}
+              onClick={handleDemoLogin}
+              disabled={loading}
+            >
+              {loading ? 'Loading...' : 'Login as Demo User'}
             </button>
           </div>
         </form>

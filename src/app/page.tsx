@@ -170,8 +170,8 @@ export default function Home() {
       <div className="glass-container">
         <div className="flex justify-between items-center mb-8 border-b border-[var(--glass-border)] pb-4">
           <div>
-            <h1 className="text-3xl font-bold text-white">Math 1 Final Prep</h1>
-            <p className="text-gray-400 text-sm mt-1">Logged in as {session.user?.email}</p>
+            <h1 className="text-3xl font-bold text-[#ededed]">Math 1 Final Prep</h1>
+            <p className="text-[#888] text-sm mt-1">Logged in as <span className="text-[#ededed] font-medium">{session.user?.email?.split('@')[0]}</span></p>
           </div>
           <button 
             onClick={handleLogout}
