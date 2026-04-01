@@ -17,20 +17,33 @@ export default function Home() {
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session)
+      if (session?.user?.user_metadata?.completedSubtopics) {
+        setCompletedSubtopics(session.user.user_metadata.completedSubtopics)
+      }
       setLoading(false)
     })
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session)
+      if (session?.user?.user_metadata?.completedSubtopics) {
+        setCompletedSubtopics(session.user.user_metadata.completedSubtopics)
+      }
     })
 
     return () => subscription.unsubscribe()
   }, [])
 
   const toggleSubtopic = (id: string) => {
-    setCompletedSubtopics(prev => 
-      prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]
-    )
+    setCompletedSubtopics(prev => {
+      const newCompleted = prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id];
+      
+      // Persist the new array to Supabase Auth Cloud (Zero-config Database)
+      supabase.auth.updateUser({
+        data: { completedSubtopics: newCompleted }
+      }).catch(console.error);
+
+      return newCompleted;
+    })
   }
 
   const handleLogout = async () => {
