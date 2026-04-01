@@ -53,36 +53,7 @@ export default function Login() {
     setLoading(false)
   }
 
-  const handleDemoLogin = async () => {
-    setLoading(true)
-    setError(null)
-    const demoUser = 'demouser'
-    const demoPass = 'DemoMath123!'
-    
-    const { error: signInError } = await supabase.auth.signInWithPassword({
-      email: formatEmail(demoUser),
-      password: demoPass,
-    })
 
-    if (signInError) {
-      const { error: signUpError } = await supabase.auth.signUp({
-        email: formatEmail(demoUser),
-        password: demoPass,
-      })
-      if (!signUpError) {
-        await supabase.auth.signInWithPassword({
-          email: formatEmail(demoUser),
-          password: demoPass,
-        })
-        router.push('/')
-      } else {
-        setError(signUpError.message)
-      }
-    } else {
-      router.push('/')
-    }
-    setLoading(false)
-  }
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[85vh] px-4">
@@ -141,23 +112,6 @@ export default function Login() {
             </button>
           </div>
 
-          <div className="relative my-6">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-[#222]"></div>
-            </div>
-            <div className="relative flex justify-center text-xs">
-              <span className="bg-[#050505] px-2 text-[#666]">Or continue with</span>
-            </div>
-          </div>
-
-          <button 
-            type="button" 
-            className="w-full bg-transparent border border-[#333] text-[#ededed] px-4 py-2 rounded-md text-sm font-medium hover:bg-[#111] transition-colors"
-            onClick={handleDemoLogin}
-            disabled={loading}
-          >
-            {loading ? 'Loading...' : 'Demo Account'}
-          </button>
         </form>
       </div>
     </div>
