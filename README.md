@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FAU Erlangen Math 1 Checklist
 
-## Getting Started
+A highly optimized, professional web application designed specifically for tracking study progress in the **2026 Mathematics 1 (Math 1) course at FAU Erlangen (Friedrich-Alexander-Universität Erlangen-Nürnberg)**.
 
-First, run the development server:
+Built with an ultra-minimalist, developer-focused aesthetic (Linear/Vercel style), this tool breaks down the entire semester's curriculum—including Lectures, Exercise Sheets, and Mock Exams—into granular, interactive checklists.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Granular Curriculum Tracking:** The entire 2026 Math 1 syllabus is digitized into structured tabs (Lectures, Exercises, Mock Exams).
+- **Intelligent Checklists:** Tracking nested subtopics. Completing all subtopics automatically strikes out the parent topic with visual feedback.
+- **Mock Exam Alerts:** Critical topics that are highly likely to appear on the final exam are distinctly highlighted in the UI.
+- **Zero-Config Persistent Sync:** User progress is natively synced to the cloud using Supabase Auth's `user_metadata` object, requiring no external database schema. Progress is saved permanently across devices.
+- **Frictionless Demo Access:** Includes a 1-click Demo Login system for instantaneous access and testing.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Framework:** Next.js (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS v3 (Pure Dark Mode Theme)
+- **Backend & Auth:** Supabase
 
-## Learn More
+## Setup & Deployment
 
-To learn more about Next.js, take a look at the following resources:
+This project requires environment variables to connect to its Supabase backend.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Clone the repository.
+2. Provide standard Supabase keys in a `.env.local` file:
+   ```env
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+4. Run the development server:
+   ```bash
+   npm run dev
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+*Note: The project does not require any Postgres tables to be created. It exclusively leverages the Auth service's `user_metadata` for state persistence.*
